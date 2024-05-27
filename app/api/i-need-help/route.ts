@@ -15,7 +15,6 @@ export async function GET( request: Request ) {
 
     const token   = process.env.SLACK_TOKEN;
     const channel = process.env.SLACK_SEND_TO;
-    console.log( 'send to channel', channel );
 
     if ( !token || !channel ) {
         return NextResponse.json( { status: 'KO', error: 'Missing Slack token or channel' }, { status: 500 } );
