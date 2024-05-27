@@ -7,10 +7,15 @@ export async function GET( request: Request ) {
     const query = new URL( request.url ).searchParams;
 
     const fromUser = query.get( 'from' ) || null;
-    const toUser   = query.get( 'to' ) || null;
+    let toUser = query.get( 'to' ) || null;
+
+    if ( toUser === 'undefined' ) {
+        toUser = null;
+    }
 
     const token   = process.env.SLACK_TOKEN;
     const channel = process.env.SLACK_SEND_TO;
+    console.log( 'send to channel', channel );
 
     if ( !token || !channel ) {
         return NextResponse.json( { status: 'KO', error: 'Missing Slack token or channel' }, { status: 500 } );
