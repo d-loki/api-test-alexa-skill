@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'; // defaults to auto
 export async function GET( request: Request ) {
     const query  = new URL( request.url ).searchParams;
     const toUser = query.get( 'to' ) || null;
+    const fromUser = query.get( 'from' ) || 'xxx';
 
     const token = process.env.SLACK_TOKEN;
     const web   = new WebClient( token );
@@ -39,9 +40,10 @@ export async function GET( request: Request ) {
     if ( conversationId !== null ) {
         await ( async () => {
 
-            let message = `xxx a besoin d'aide !`;
+
+            let message = `${ fromUser } a besoin d'aide !`;
             if ( toUser !== null ) {
-                message = `xxx demande de l'aide à ${ toUser } via Alexa !`;
+                message = `${ fromUser } demande de l'aide à ${ toUser } via Alexa !`;
             }
 
             const result = await web.chat.postMessage( {
