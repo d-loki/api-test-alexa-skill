@@ -42,7 +42,7 @@ export async function GET( request: Request ) {
 
 
             let message = `${ fromUser } a besoin d'aide !`;
-            if ( toUser !== null ) {
+            if ( toUser !== null && toUser !== undefined && toUser !== '' ) {
                 message = `${ fromUser } demande de l'aide à ${ toUser } via Alexa !`;
             }
 
@@ -51,7 +51,9 @@ export async function GET( request: Request ) {
                                                            channel: conversationId,
                                                        } );
         } )();
+
+        return NextResponse.json( { status: 'OK' } );
     }
 
-    return NextResponse.json( { status: 'OK' } );
+    return NextResponse.json( { status: 'KO' } );
 }
